@@ -1,4 +1,4 @@
-import clint from "../config/database.js";
+import clint from "../../config/database.js";
 
 
 export const createBoard = async (req, res) => {
