@@ -6,14 +6,11 @@ import { createTasks, findAllTasks, findOneTasks, updateTasks, deleteTasks } fro
 const routerTasks = express.Router();
 
 
-
 routerTasks.post("/tasks", createTasks)
 routerTasks.get("/tasks", findAllTasks)
 routerTasks.get("/tasks/:id", findOneTasks)
 routerTasks.put("/tasks/:id", updateTasks)
 routerTasks.delete("/tasks/:id", deleteTasks)
-
-
 
 
 
