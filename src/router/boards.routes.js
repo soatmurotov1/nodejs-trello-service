@@ -1,7 +1,7 @@
 import express from "express"
 
 
-import { createBoards, findAllBoards, findOneBoards, updateBoards, deleteBoards } from "../controllers/board.controller.js"
+import { createBoards, findAllBoards, findOneBoards, updateBoards, deleteBoards } from "../controller/boards.controller.js"
 
 
 
