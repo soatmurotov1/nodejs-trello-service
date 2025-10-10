@@ -7,14 +7,14 @@ const routerTasks = express.Router();
 
 
 
-routerColumns.post("/tasks", createTasks)
-routerColumns.get("/tasks", findAllTasks)
-routerColumns.get("/tasks/:id", findOneTasks)
-routerColumns.put("/tasks/:id", updateTasks)
-routerColumns.delete("/tasks/:id", deleteTasks)
+routerTasks.post("/tasks", createTasks)
+routerTasks.get("/tasks", findAllTasks)
+routerTasks.get("/tasks/:id", findOneTasks)
+routerTasks.put("/tasks/:id", updateTasks)
+routerTasks.delete("/tasks/:id", deleteTasks)
 
 
 
 
 
-export default routerColumns;
+export default routerTasks;

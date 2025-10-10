@@ -17,3 +17,4 @@ routerColumns.get("/columns/:id", findOneColumns)
 routerColumns.put("/columns/:id", updateColumns)
 routerColumns.delete("/columns/:id", deleteColumns)
 
+export default routerColumns
