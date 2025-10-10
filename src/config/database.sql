@@ -1,11 +1,9 @@
+-- Active: 1759193815934@@127.0.0.1@5432@node_trello_service@public
 
 
 CREATE DATABASE node_trello_service;
 
-\c node_trello_service
-
-
-
+\c node_trello_service;
 
 
 CREATE TABLE users(
@@ -13,31 +11,37 @@ CREATE TABLE users(
     name VARCHAR,
     email VARCHAR UNIQUE,
     password VARCHAR 
-)
-
-SELECT * FROM users;
-
-
-
-
-
-
+);
 
 
 CREATE TABLE boards(
     id serial PRIMARY KEY,
-    title VARCHAR,
-    columns VARCHAR
+    title VARCHAR NOT NULL
 );
 
-SELECT * FROM boards;
 
 
-
+CREATE TABLE columns(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR NOT NULL
+);
 
 
 
 CREATE TABLE tasks(
     id serial PRIMARY KEY,
-    
-)
+    title VARCHAR not NULL,
+    "order" SMALLINT NOT NULL,
+    description TEXT,
+    userId INT REFERENCES users(id) on delete CASCADE,
+    boarId INT REFERENCES boards(id) on delete CASCADE,
+    columnId INT REFERENCES columns(id) on delete CASCADE
+);
+
+
+
+
+
+
+
+
