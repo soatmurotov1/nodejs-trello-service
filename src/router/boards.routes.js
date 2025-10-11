@@ -9,11 +9,11 @@ const routerBoards = express.Router()
 
 
 
-routerBoards.post("/boards", createBoards)
-routerBoards.get("/boards", findAllBoards)
-routerBoards.get("/boards/:id", findOneBoards)
-routerBoards.put("/boards/:id", updateBoards)
-routerBoards.delete("/boards/:id", deleteBoards)
+routerBoards.post("/", createBoards)
+routerBoards.get("/", findAllBoards)
+routerBoards.get("//:id", findOneBoards)
+routerBoards.put("/:id", updateBoards)
+routerBoards.delete("/:id", deleteBoards)
 
 
 
