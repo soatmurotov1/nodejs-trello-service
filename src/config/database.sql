@@ -12,7 +12,7 @@ CREATE TABLE users(
     email VARCHAR UNIQUE,
     password VARCHAR 
 );
-
+SELECT * FROM tasks;
 
 CREATE TABLE boards(
     id serial PRIMARY KEY,

@@ -7,11 +7,11 @@ import { createUsers, findAllUsers, findOneUsers, updateUsers, deleteUsers } fro
 const routerUsers = express.Router()
 
 
-routerUsers.post("/users", createUsers)
-routerUsers.get("/users", findAllUsers)
-routerUsers.get("/users/:id", findOneUsers)
-routerUsers.put("/users/:id", updateUsers)
-routerUsers.delete("/users/:id", deleteUsers)
+routerUsers.post("/", createUsers)
+routerUsers.get("/", findAllUsers)
+routerUsers.get("/:id", findOneUsers)
+routerUsers.put("/:id", updateUsers)
+routerUsers.delete("/:id", deleteUsers)
 
 
 

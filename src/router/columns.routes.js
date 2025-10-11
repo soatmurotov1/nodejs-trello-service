@@ -11,10 +11,10 @@ const routerColumns = express.Router()
 
 
 
-routerColumns.post("/columns", createColumns)
-routerColumns.get("/columns", findAllColumns)
-routerColumns.get("/columns/:id", findOneColumns)
-routerColumns.put("/columns/:id", updateColumns)
-routerColumns.delete("/columns/:id", deleteColumns)
+routerColumns.post("/", createColumns)
+routerColumns.get("/", findAllColumns)
+routerColumns.get("/:id", findOneColumns)
+routerColumns.put("/:id", updateColumns)
+routerColumns.delete("/:id", deleteColumns)
 
 export default routerColumns
