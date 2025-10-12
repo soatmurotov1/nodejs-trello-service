@@ -1,20 +1,14 @@
-import express from "express"
+import { Router } from "express"
+import { getAll, getOne, createOne, updateOne, deleteOne } from "../controller/columns.controller.js"
 
-import { createColumns, findAllColumns, findOneColumns, updateColumns, deleteColumns } from "../controller/columns.controller.js"
+const routerColumns = Router()
 
-
-
-const routerColumns = express.Router()
-
-
-
-
-
-
-routerColumns.post("/", createColumns)
-routerColumns.get("/", findAllColumns)
-routerColumns.get("/:id", findOneColumns)
-routerColumns.put("/:id", updateColumns)
-routerColumns.delete("/:id", deleteColumns)
+routerColumns.get("/", getAll)          
+routerColumns.get("/:id", getOne)
+routerColumns.post("/", createOne)
+routerColumns.put("/:id", updateOne)
+routerColumns.delete("/:id", deleteOne)
 
 export default routerColumns
+
+

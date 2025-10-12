@@ -1,22 +1,16 @@
-import express from "express"
+import { Router } from "express"
+import { getAll, getOne, createOne, updateOne, deleteOne } from "../controller/boards.controller.js"
 
+const routerBoards = Router()
 
-import { createBoards, findAllBoards, findOneBoards, updateBoards, deleteBoards } from "../controller/boards.controller.js"
-
-
-
-const routerBoards = express.Router()
-
-
-
-routerBoards.post("/", createBoards)
-routerBoards.get("/", findAllBoards)
-routerBoards.get("//:id", findOneBoards)
-routerBoards.put("/:id", updateBoards)
-routerBoards.delete("/:id", deleteBoards)
-
-
+routerBoards.get("/", getAll)          
+routerBoards.get("/:id", getOne)
+routerBoards.post("/", createOne)
+routerBoards.put("/:id", updateOne)
+routerBoards.delete("/:id", deleteOne)
 
 
 
 export default routerBoards
+
+
