@@ -1,18 +1,14 @@
-import express from "express"
+import { Router } from "express"
+import { getAll, getOne, createOne, updateOne, deleteOne } from "../controller/users.controller.js"
 
-import { createUsers, findAllUsers, findOneUsers, updateUsers, deleteUsers } from "../controller/users.controller.js"
+const routerUsers = Router()
 
-
-
-const routerUsers = express.Router()
-
-
-routerUsers.post("/", createUsers)
-routerUsers.get("/", findAllUsers)
-routerUsers.get("/:id", findOneUsers)
-routerUsers.put("/:id", updateUsers)
-routerUsers.delete("/:id", deleteUsers)
-
-
+routerUsers.get("/", getAll)          
+routerUsers.get("/:id", getOne)
+routerUsers.post("/", createOne)
+routerUsers.put("/:id", updateOne)
+routerUsers.delete("/:id", deleteOne)
 
 export default routerUsers
+
+
