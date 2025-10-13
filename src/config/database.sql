@@ -34,7 +34,7 @@ CREATE TABLE tasks(
     "order" SMALLINT NOT NULL,
     description TEXT,
     userId INT REFERENCES users(id) on delete CASCADE,
-    boarId INT REFERENCES boards(id) on delete CASCADE,
+    boardId INT REFERENCES boards(id) on delete CASCADE,
     columnId INT REFERENCES columns(id) on delete CASCADE
 );
 

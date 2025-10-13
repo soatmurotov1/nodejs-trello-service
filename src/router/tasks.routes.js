@@ -1,5 +1,6 @@
 import { Router } from "express"
 import { getAll, getOne, createOne, updateOne, deleteOne } from "../controller/tasks.controller.js"
+import { taskValidation } from "../validation/tasks.validation.js"
 
 
 const routerTasks = Router()
