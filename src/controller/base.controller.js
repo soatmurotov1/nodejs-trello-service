@@ -2,28 +2,37 @@ import pool from "../config/database.js"
 
 export const createBaseController = (table) => ({
 
-
-    async createOne(req, res, next) {
-      try {
-        const key = Object.keys(req.body)
-        const value = Object.values(req.body)
-        const query = `INSERT INTO ${table} (${key.join(",")}) VALUES (${key.map((_, i) => `$${i + 1}`).join(",")}) RETURNING *`
-        const createAll = await pool.query(query, value)
-        res.status(201).json({ data: createAll.rows[0] })
-      } catch (err) {
-        return next(err) 
-       }
-    },
-
-
+  
+  async createOne(req, res, next) {
+    try {
+      const key = Object.keys(req.body)
+      const value = Object.values(req.body)
+      const query = `INSERT INTO ${table} (${key.join(",")}) VALUES (${key.map((_, i) => `$${i + 1}`).join(",")}) RETURNING *`
+      const createAll = await pool.query(query, value)
+      res.status(201).json({ data: createAll.rows[0] })
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({
+        message: `Error in thre serveer`
+      })      
+    }
+  },
+  
+  
   async getAll(req, res, next) {
     try {
+      console.log(table);
       const { page = 1, limit = 10 } = req.query
       const offset = (page - 1) * limit
       const findAll = await pool.query(`SELECT * FROM ${table} OFFSET $1 LIMIT $2`, [offset, limit])
+      console.log(findAll.rows[0]);
+      
       res.json({ data: findAll.rows })
     } catch (err) {
-        return next(err) 
+      console.log(err);
+      return res.status(500).json({
+        message: "Error in the server"
+      })
     }
   },
 
@@ -39,7 +48,11 @@ export const createBaseController = (table) => ({
           res.json({ data: getOne.rows[0] })
 
         } catch (err) { 
-            return next(err) 
+            console.log(err);
+            res.status(500).json({
+              message: `error in the server`
+            })
+            
         }
     },
     
@@ -60,7 +73,11 @@ export const createBaseController = (table) => ({
             res.json({ data: updateOne.rows[0] })
 
         } catch (err) {
-            return next(err)
+            console.log(err);
+            res.status(500).json({
+              message: `Error in the server`
+            })
+            
         }
     },
     
@@ -73,10 +90,14 @@ export const createBaseController = (table) => ({
           return res.status(404).json({ message: "Not found" })
         }
 
-        res.json({ data: deleteOne.rows[0] })
+        res.json({ data: `deleted`})
 
     } catch (err) { 
-        return next(err)
+        console.log(err);
+        res.status(500).json({
+          message: `Error in the server`
+        })
+        
     }
 }
 })
