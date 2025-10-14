@@ -1,9 +1,9 @@
 import { Router } from "express"
 import { getAll, getOne, createOne, updateOne, deleteOne } from "../controller/users.controller.js"
+import { userValidation } from "../validation/users.validation.js"
 
 
 const routerUsers = Router()
-console.log(1);
 
 
 routerUsers.get("/", getAll)          

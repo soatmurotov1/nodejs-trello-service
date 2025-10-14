@@ -1,5 +1,6 @@
 import { Router } from "express"
 import { getAll, getOne, createOne, updateOne, deleteOne } from "../controller/columns.controller.js"
+import { columnValidation } from "../validation/columns.validation.js"
 
 const routerColumns = Router()
 
