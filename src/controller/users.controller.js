@@ -1,6 +1,3 @@
+import { BaseController } from "./base.controller.js"
 
-
-import { createBaseController } from "./base.controller.js"
-export const { getAll, getOne, createOne, updateOne, deleteOne } = createBaseController("users")
-
-
+export const usersController = BaseController("users")

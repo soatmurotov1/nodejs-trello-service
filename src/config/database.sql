@@ -16,7 +16,8 @@ SELECT * FROM tasks;
 
 CREATE TABLE boards(
     id serial PRIMARY KEY,
-    title VARCHAR NOT NULL
+    title VARCHAR NOT NULL,
+    columns VARCHAR 
 );
 
 
@@ -31,7 +32,7 @@ CREATE TABLE columns(
 CREATE TABLE tasks(
     id serial PRIMARY KEY,
     title VARCHAR not NULL,
-    "order" SMALLINT NOT NULL,
+    orderr SMALLINT NOT NULL,
     description TEXT,
     userId INT REFERENCES users(id) on delete CASCADE,
     boardId INT REFERENCES boards(id) on delete CASCADE,
