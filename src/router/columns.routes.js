@@ -1,15 +1,17 @@
-import { Router } from "express"
-import { getAll, getOne, createOne, updateOne, deleteOne } from "../controller/columns.controller.js"
+import express from "express"
+import { columnsController } from "../controller/columns.controller.js"
 import { columnValidation } from "../validation/columns.validation.js"
-
-const routerColumns = Router()
-
-routerColumns.get("/", getAll)          
-routerColumns.get("/:id", getOne)
-routerColumns.post("/", createOne)
-routerColumns.put("/:id", updateOne)
-routerColumns.delete("/:id", deleteOne)
-
-export default routerColumns
+import { validation } from "../middleware/validation.js"
 
 
+const columnsRouter = express.Router()
+
+columnsRouter.get("/", columnsController.getAll)
+columnsRouter.get("/:id", columnsController.getOne)
+columnsRouter.post("/", validation(columnValidation), columnsController.createOne)
+columnsRouter.put("/:id", validation(columnValidation), columnsController.updateOne)
+columnsRouter.delete("/:id", columnsController.deleteOne)
+columnsRouter.search("/search", columnsController.search)
+
+
+export default columnsRouter

@@ -1,14 +1,17 @@
-import { Router } from "express"
-import { getAll, getOne, createOne, updateOne, deleteOne } from "../controller/boards.controller.js"
-import { validate } from "../middleware/validate.js"
-import { createBoardSchema, updateBoardSchema } from "../validation/boards.validation.js"
+import express from "express"
+import { boardsController } from "../controller/boards.controller.js"
+import { boardsValidation } from "../validation/boards.validation.js"
+import { validation } from "../middleware/validation.js"
 
-const routerBoards = Router()
 
-routerBoards.get("/", getAll)
-routerBoards.get("/:id", getOne)
-routerBoards.post("/", createOne)
-routerBoards.put("/:id", updateOne)
-routerBoards.delete("/:id", deleteOne)
+const boardsRouter = express.Router()
 
-export default routerBoards
+boardsRouter.get("/", boardsController.getAll)
+boardsRouter.get("/:id", boardsController.getOne)
+boardsRouter.post("/", validation(boardsValidation), boardsController.createOne)
+boardsRouter.put("/:id", validation(boardsValidation), boardsController.updateOne)
+boardsRouter.delete("/:id", boardsController.deleteOne)
+boardsRouter.search("/search", boardsController.search)
+
+
+export default boardsRouter

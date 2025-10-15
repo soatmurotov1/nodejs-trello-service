@@ -1,20 +1,14 @@
-import express from "express"
-import routerBoards from "./boards.routes.js"
-import routerColumns from "./columns.routes.js"
-import routerTasks from "./tasks.routes.js"
-import routerUsers from "./users.routes.js"
-import { register, login } from "../controller/auth.controller.js"
+import { Router } from "express"
+import userRouter from "./users.routes.js"
+import boardRouter from "./boards.routes.js"
+import taskRouter from "./tasks.routes.js"
+import columnsRouter from "./columns.routes.js"
+import loginRiuter from "./"
+const router = Router()
 
-
-const router = express.Router()
-
-
-router.use("/users", routerUsers)
-router.use("/boards", routerBoards)
-router.use("/columns", routerColumns)
-router.use("/tasks", routerTasks)
-router.post("/register", register)
-router.post("/login", login)
-
-
+router.use("/users", userRouter)
+router.use("/boards", boardRouter)
+router.use("/tasks", taskRouter)
+router.use("/columns", columnsRouter)
+router.use("/login", )
 export default router
