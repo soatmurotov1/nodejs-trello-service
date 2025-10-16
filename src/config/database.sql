@@ -1,44 +1,44 @@
--- Active: 1759193815934@@127.0.0.1@5432@node_trello_service@public
+-- Active: 1759193815934@@127.0.0.1@5432@node_trello_service
 
 
 CREATE DATABASE node_trello_service;
 
 \c node_trello_service;
+CREATE EXTENSION if NOT EXISTS"pgcrypto";
 
 
 CREATE TABLE users(
-    id serial PRIMARY KEY,
-    name VARCHAR,
-    email VARCHAR UNIQUE,
-    password VARCHAR 
+    id  UUID  PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR NOT NULL,
+    email VARCHAR UNIQUE NOT NULL,
+    password VARCHAR NOT NULL
 );
 SELECT * FROM tasks;
 
 CREATE TABLE boards(
-    id serial PRIMARY KEY,
-    title VARCHAR NOT NULL,
-    columns VARCHAR 
+    id  UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    title VARCHAR NOT NULL
 );
 
 
 
-CREATE TABLE columns(
-    id SERIAL PRIMARY KEY,
-    name VARCHAR NOT NULL
+CREATE TABLE columnss(
+    id  UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR NOT NULL,
+    boardId UUID REFERENCES boards(id) on delete CASCADE 
 );
 
 
 
 CREATE TABLE tasks(
-    id serial PRIMARY KEY,
+    id  UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     title VARCHAR not NULL,
     orderr SMALLINT NOT NULL,
-    description TEXT,
-    userId INT REFERENCES users(id) on delete CASCADE,
-    boardId INT REFERENCES boards(id) on delete CASCADE,
-    columnId INT REFERENCES columns(id) on delete CASCADE
+    descriptionn TEXT,
+    userId UUID REFERENCES users(id) on delete CASCADE,
+    boardId UUID REFERENCES boards(id) on delete CASCADE,
+    columnId UUID REFERENCES columnss(id) on delete CASCADE
 );
-
 
 
 

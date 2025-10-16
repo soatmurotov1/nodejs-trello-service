@@ -11,7 +11,6 @@ boardsRouter.get("/:id", boardsController.getOne)
 boardsRouter.post("/", validation(boardsValidation), boardsController.createOne)
 boardsRouter.put("/:id", validation(boardsValidation), boardsController.updateOne)
 boardsRouter.delete("/:id", boardsController.deleteOne)
-boardsRouter.search("/search", boardsController.search)
 
 
 export default boardsRouter

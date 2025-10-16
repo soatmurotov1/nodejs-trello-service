@@ -11,7 +11,6 @@ columnsRouter.get("/:id", columnsController.getOne)
 columnsRouter.post("/", validation(columnValidation), columnsController.createOne)
 columnsRouter.put("/:id", validation(columnValidation), columnsController.updateOne)
 columnsRouter.delete("/:id", columnsController.deleteOne)
-columnsRouter.search("/search", columnsController.search)
 
 
 export default columnsRouter

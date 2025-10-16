@@ -1,43 +1,60 @@
 import pool from "../config/database.js"
+import bcrypt, { hash } from "bcrypt"
 
 
 export const BaseController = (table) => ({
-  getAll: async (req, res) => {
+  getAll: async (req, res, next) => {
     try {
-      const getAll = await pool.query(`SELECT * FROM ${table}`)
-      res.status(200).json({ message: `Data found`, data: getAll.rows})
-      if(getAll.rows.length === 0) {
-        return res.status(400).json({ message: `Data not found from ${table}`})
+      const tables = ["users", "columns", "tasks", "boards" ]
+
+      if (!tables.includes(table)) {
+        return res.status(401).json({ message: `table not found ${table}`})
       }
+      const getAllData = await pool.query(`SELECT * FROM ${table}`)
+      const data = getAllData.rows.map(({password, ...rest}) => rest)
+      // console.log(getAllData);
+      
+    
+      res.status(200).json({ message: `data found from ${table}`, data: data})
+      
     } catch (error) {
       console.error(error)
-      res.status(500).json({ message: `error in the server` })
+      next(error)
     }
   },
 
 
-
-  getOne: async (req, res) => {
+  getOne: async (req, res, next) => {
     try {
       const { id } = req.params
-      const getOne = await pool.query(`SELECT * FROM ${table} WHERE id=$1`, [id])
+      const tables = ["users", "boards", "tasks", "columns"]
+      if(!tables.includes(table)) {
+        return res.status.json({ message: `table not found from ${table}` })
+      }
 
-      if (getOne.rows.length === 0){
-        return res.status(400).json({ message: `not found id ${id}` })
+      const getOneData = await pool.query(`SELECT * FROM ${table} WHERE id=$1`, [id])
+      const data = getOneData.rows.map(({password, ...rest}) => rest)
+      if (getOneData.rows.length === 0){
+        return res.status(404).json({ message: `not found id ${id} from ${table}` })
       } 
 
-      res.status(200).json({ message: `Data found`, data: getOne.rows[0]})
+      res.status(200).json({ message: `data found id ${id} from ${table}`, data: data})
     } catch (error) {
       console.error(error)
-      res.status(500).json({ message: `error in the server` })
+      next(error)
     }
   },
-  createOne: async (req, res) => {
+  createOne: async (req, res, next) => {
     try {
-    if (table === "tasks") {
+    const tables = ["users", "boards", "tasks", "columns"]
+    if(!tables.includes(table)) {
+        return res.status(400).json({ message: `table not found from ${table}` })
+    }
+
+    if(table === "tasks") {
       const { columnId } = req.body
       if (!columnId) {
-        return res.status(400).json({ message: "columnId shart" })
+        return res.status(401).json({ message: "columnId shart" })
       }
       const column = await pool.query('SELECT * FROM columns WHERE id=$1', [columnId])
       if (column.rows.length === 0) {
@@ -45,12 +62,21 @@ export const BaseController = (table) => ({
       }
     }
 
-    if (table === "users" && req.body.email) {
-      const emailUser = await pool.query(`SELECT * FROM users WHERE email=$1`, [req.body.email])
+    if (table === "users") {
+      const { email, password } = req.body
+      if(!email){
+        return res.status(400).json({ message: `email is required`})
+      } 
+      if(!password) {
+        return res.status(400).json({ message: `password is required`})
+
+      }
+      const emailUser = await pool.query(`SELECT * FROM users WHERE email=$1`, [email])
       if (emailUser.rows.length > 0) {
-        return res.status(400).json({ message: "Email allaqachon bor" });
+        return res.status(400).json({ message: `bu ${email} mail allaqachon bor` });
       }
     }
+
 
     const key = Object.keys(req.body)
     const values = Object.values(req.body)
@@ -67,6 +93,11 @@ export const BaseController = (table) => ({
 
   updateOne: async (req, res) => {
     try {
+    const tables = ["users", "boards", "tasks", "columns"]
+    if(!tables.includes(table)) {
+        return res.status(400).json({ message: `table not found from ${table}` })
+    }
+
       const { id } = req.params
       const keys = Object.keys(req.body)
       const values = Object.values(req.body)
@@ -83,7 +114,7 @@ export const BaseController = (table) => ({
       })
     } catch (error) {
       console.error(error)
-      res.status(500).json({ message: `error in the server` })
+      next(error)
     }
   },
 
@@ -102,30 +133,10 @@ deleteOne: async (req, res) => {
     })
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: `error in the server` })
+    next(error)
   }
 },
 
 
-
-search: async (req, res) => {
-  try {
-    const keys = Object.keys(req.body)
-    const values = Object.values(req.body)
-
-    if(keys.length === 0){
-      return res.status(400).json({ message: `No search parameters sent`})
-    }
-
-    const condition = keys.map((key, i) => `${key}=$${i+1}`).join(" and ")
-    const query = `SELECT * FROM ${table} WHERE ${condition}`
-    const searchRes = await pool.query(query, values)
-
-    res.status(200).json({ data: searchRes.rows })
-  } catch(error) {
-    console.error(error)
-    res.status(500).json({ message: `error in the server` })
-  }
-}
 
 })

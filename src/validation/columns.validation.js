@@ -6,5 +6,10 @@ export const columnValidation = Joi.object({
     "string.base": "name string bulishi kerak",
     "string.min": "name kamida 2 ta bulishi kerak",
     "any.required": "name shart"
+  }),
+  boardId: Joi.string().uuid().required().messages({
+    "string.base": "boardId string bulishi kerak",
+    "string.guid": "boardId UUID bulishi kerak",
+    "any.required": "boardId shart"
   })
 })
