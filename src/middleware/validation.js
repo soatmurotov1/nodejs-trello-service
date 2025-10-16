@@ -1,6 +1,6 @@
 export const validation = (schema) => {
   return (req, res, next) => {
-    const { error, result } = schema.validate(req.body, { abortEarly: false })
+    const { error } = schema.validate(req.body, { abortEarly: false })
 
     if (error) {
       return res.status(400).json({
@@ -8,8 +8,6 @@ export const validation = (schema) => {
         errors: error.details.map((err) => err.message)
       })
     }
-    
-    req.validate = 
     next()
   }
 }

@@ -11,22 +11,21 @@ export const tasksValidation = Joi.object({
   descriptionn: Joi.string().allow("").messages({
     "string.base": "descriptionn matn bulishi kerak"
   }),
-  orderr: Joi.number().integer().required().messages({
+  orderr: Joi.number().required().messages({
     "any.required": "orderr shart",
-    "number.base": "orderr son bulishi kerak",
-    "number.integer": "orderr butun son bulishi kerak"
+    "number.base": "orderr son bulishi kerak"
   }),
-  userId: Joi.number().integer().required().messages({
+  userId: Joi.string().required().messages({
     "any.required": "userId shart",
-    "number.base": "userId son bulishi kerak"
+    "string.base": "userId string bulishi kerak"
   }),
-  boardId: Joi.number().integer().required().messages({
+  boardId: Joi.string().required().messages({
     "any.required": "boardId shart",
-    "number.base": "boardId raqam bulishi kerak"
+    "string.base": "boardId string bulishi kerak"
   }),
-  columnId: Joi.number().integer().required().messages({
+  columnId: Joi.string().required().messages({
     "any.required": "columnId shart",
-    "number.base": "columnId son bulishi kerak"
+    "string.base": "columnId string bulishi kerak"
   })
 })
 
@@ -45,13 +44,16 @@ export const updateValidation = Joi.object({
     "number.base": "orderr son bulishi kerak",
     "number.integer": "orderr butun son bulishi kerak"
   }),
-  userId: Joi.number().integer().messages({
-    "number.base": "userId son bulishi kerak"
+  userId: Joi.string().messages({
+    "string.guid": "userId UUID bulishi kerak",
+    "string.base": "userId string bulishi kerak"
   }),
-  boardId: Joi.number().integer().messages({
-    "number.base": "boardId raqam bulishi kerak"
+  boardId: Joi.string().messages({
+    "string.guid": "boardId UUID bulishi kerak",
+    "string.base": "boardId string bulishi kerak"
   }),
-  columnId: Joi.number().integer().messages({
-    "number.base": "columnId son bulishi kerak"
+  columnId: Joi.string().messages({
+    "string.guid": "columnId UUID bulishi kerak",
+    "string.base": "columnId string bulishi kerak"
   })
 })

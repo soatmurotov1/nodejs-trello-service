@@ -2,7 +2,6 @@
 
 
 CREATE DATABASE node_trello_service;
-
 \c node_trello_service;
 CREATE EXTENSION if NOT EXISTS"pgcrypto";
 
@@ -14,21 +13,21 @@ CREATE TABLE users(
     password VARCHAR NOT NULL
 );
 SELECT * FROM tasks;
+drop table columns;
 
 CREATE TABLE boards(
     id  UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    title VARCHAR NOT NULL
+    title VARCHAR NOT NULL,
+    userId UUID REFERENCES users(id) on DElete CASCADE
 );
 
 
 
-CREATE TABLE columnss(
+CREATE TABLE columns(
     id  UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR NOT NULL,
     boardId UUID REFERENCES boards(id) on delete CASCADE 
 );
-
-
 
 CREATE TABLE tasks(
     id  UUID PRIMARY KEY DEFAULT gen_random_uuid(),

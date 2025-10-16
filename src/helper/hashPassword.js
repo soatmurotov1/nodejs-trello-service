@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt"
 
-export const hashpassword = async (password) => {
+export const hashPassword = async (password) => {
   return await bcrypt.hash(password, 10)
 }
 
