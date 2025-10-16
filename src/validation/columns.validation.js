@@ -13,3 +13,11 @@ export const columnValidation = Joi.object({
     "any.required": "boardId shart"
   })
 })
+
+
+export const columnUpdateValidation = Joi.object({
+  name: Joi.string().min(2).messages({
+    "string.base": "name string bulishi kerak",
+    "string.min": "name kamida 2 ta bulishi kerak"
+  })
+})

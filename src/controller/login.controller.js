@@ -1,5 +1,5 @@
 import pool from "../config/database.js"
-import { hashPassword, password } from "../helper/hashPassword.js"
+import { loginPassword} from "../helper/hashPassword.js"
 
 
 
@@ -9,6 +9,10 @@ export const login = async (req, res) => {
     const user = await pool.query(`SELECT * FROM users WHERE email=$1`, [email])
     if (user.rows.length === 0){
       return res.status(404).json({ message: `not found email ${email}`})
+    }
+    const checkPassword = loginPassword(password, user.rows[0].password)
+    if(!checkPassword){
+      return res.status(400).json({message:`INVALID PASSWORD!`})
     }
 
     const valid = await hashPassword(password, user.rows[0].password)
