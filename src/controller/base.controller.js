@@ -53,16 +53,16 @@ export const BaseController = (table) => ({
     if(table === "tasks") {
       const { columnId, boardId, taskId } = req.body
       const boardIdCheck = await pool.query(`SELECT * from boards where id = $1`, [boardId])
-      if (!boardIdCheck.rows.length === 0) {
-        return res.status(401).json({ message: "boardId ID raqami topilmadi" })
+      if (boardIdCheck.rows.length === 0) {
+        return res.status(401).json({ message: `not found id from boards` })
       }
        const columnIdCheck = await pool.query(`SELECT * from columns where id = $1`, [columnId])
-      if (!columnIdCheck.rows.length === 0) {
-        return res.status(401).json({ message: "columnId ID raqami topilmadi" })
+      if (columnIdCheck.rows.length === 0) {
+        return res.status(401).json({ message: `not found id from columns` })
       }
        const taskIdCheck = await pool.query(`SELECT * from tasks where id = $1`, [taskId])
-      if (!taskIdCheck.rows.length === 0) {
-        return res.status(401).json({ message: "taskId ID raqami topilmadi" })
+      if (taskIdCheck.rows.length === 0) {
+        return res.status(401).json({ message: `not found id from tasks` })
       }
 
     }
@@ -83,14 +83,14 @@ export const BaseController = (table) => ({
     if(table === "columns"){
     const {boardId} = req.body
       const boardIdCheck = await pool.query(`SELECT * from boards where id = $1`, [boardId])
-      if (!boardIdCheck.rows.length === 0) {
+      if (boardIdCheck.rows.length === 0) {
         return res.status(401).json({ message: "boardId ID raqami topilmadi" })
       }}
-    // const body = req.body
-    // if(body.password){
-    //           const hashedPassword = await bcrypt.hash(body.password, 10)
-    //           body.password = hashedPassword   
-    // }
+    const body = req.body
+    if(body.password){
+              const hashedPassword = await bcrypt.hash(body.password, 10)
+              body.password = hashedPassword   
+    }
     const key = Object.keys(req.body)
     const values = Object.values(req.body)
     const query = `INSERT INTO ${table} (${key.join(", ")}) VALUES (${key.map((_, i) => `$${i+1}`).join(", ")}) RETURNING *`
@@ -156,6 +156,16 @@ deleteOne: async (req, res) => {
   } catch (error) {
     console.error(error)
     return next(error)
+  }
+},
+search: async (req, res) => {
+  try {
+    const { page =1, limit = 10 } = req.params
+
+  }catch(error){
+    console.error(error)
+    return next(error)
+    
   }
 }
 })
