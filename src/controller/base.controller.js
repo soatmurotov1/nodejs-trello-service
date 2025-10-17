@@ -1,4 +1,3 @@
-import { ta } from "zod/locales"
 import pool from "../config/database.js"
 import bcrypt, { hash } from "bcrypt"
 
@@ -54,15 +53,11 @@ export const BaseController = (table) => ({
       const { columnId, boardId, taskId } = req.body
       const boardIdCheck = await pool.query(`SELECT * from boards where id = $1`, [boardId])
       if (boardIdCheck.rows.length === 0) {
-        return res.status(401).json({ message: `not found id from boards` })
+        return res.status(401).json({ message: `not found boardId from boards` })
       }
        const columnIdCheck = await pool.query(`SELECT * from columns where id = $1`, [columnId])
       if (columnIdCheck.rows.length === 0) {
-        return res.status(401).json({ message: `not found id from columns` })
-      }
-       const taskIdCheck = await pool.query(`SELECT * from tasks where id = $1`, [taskId])
-      if (taskIdCheck.rows.length === 0) {
-        return res.status(401).json({ message: `not found id from tasks` })
+        return res.status(401).json({ message: `not found columnId from columns` })
       }
 
     }
@@ -134,7 +129,7 @@ export const BaseController = (table) => ({
   },
   
 
-deleteOne: async (req, res) => {
+deleteOne: async (req, res, next) => {
   try {
     const tables = ["users", "boards", "tasks", "columns"]
     if(!tables.includes(table)) {
@@ -158,7 +153,7 @@ deleteOne: async (req, res) => {
     return next(error)
   }
 },
-search: async (req, res) => {
+search: async (req, res, next) => {
   try {
     const { page =1, limit = 10 } = req.params
 
