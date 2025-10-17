@@ -2,7 +2,9 @@
 
 
 CREATE DATABASE node_trello_service;
+
 \c node_trello_service;
+
 CREATE EXTENSION if NOT EXISTS"pgcrypto";
 
 
@@ -12,8 +14,8 @@ CREATE TABLE users(
     email VARCHAR UNIQUE NOT NULL,
     password VARCHAR NOT NULL
 );
-SELECT * FROM tasks;
-drop table columns;
+
+
 
 CREATE TABLE boards(
     id  UUID PRIMARY KEY DEFAULT gen_random_uuid(),
