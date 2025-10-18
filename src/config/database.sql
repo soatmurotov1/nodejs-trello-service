@@ -5,7 +5,7 @@ CREATE DATABASE node_trello_service;
 
 \c node_trello_service;
 
-CREATE EXTENSION if NOT EXISTS"pgcrypto";
+CREATE EXTENSION if NOT EXISTS "pgcrypto";
 
 
 CREATE TABLE users(
@@ -38,7 +38,7 @@ CREATE TABLE tasks(
     descriptionn TEXT,
     userId UUID REFERENCES users(id) on delete CASCADE,
     boardId UUID REFERENCES boards(id) on delete CASCADE,
-    columnId UUID REFERENCES columnss(id) on delete CASCADE
+    columnId UUID REFERENCES columns(id) on delete CASCADE
 );
 
 
