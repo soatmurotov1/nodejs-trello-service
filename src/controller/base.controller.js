@@ -122,6 +122,14 @@ export const BaseController = (table) => {
       } catch (error) {
         next(error)
       }
+    },
+    search: async (req, res, next) => {
+      try {
+        const { page =1, limit =10 } = req.body
+        
+      } catch (error) {
+        next(error)
+      }
     }
   }
 }
