@@ -13,7 +13,10 @@ export const BaseController = (table) => {
       try {
         const getAllData = await pool.query(`SELECT * FROM ${table}`)
         const data = getAllData.rows.map(({ password, ...rest }) => rest)
-        res.status(200).json({message: `data found from ${table}`,data: data})
+        res.status(200).json({
+          message: `data found from ${table}`,
+          total: data.length,
+          data: data })
       } catch (error) {
         next(error)
       }
@@ -25,10 +28,14 @@ export const BaseController = (table) => {
         const checkId = await pool.query(`SELECT * FROM ${table} WHERE id = $1`, [id])
 
         if (checkId.rows.length === 0) {
-          return res.status(404).json({ message: `Not found ID ${id} from ${table}` })
+          return res.status(404).json({ 
+            message: `Not found ID ${id} from ${table}` })
         }
-        const data = checkId.rows.map(({ password, ...rest }) => rest)
-        res.status(200).json({ message: `data found for ID ${id} from ${table}`,data: data})
+        const { password, ...data } = checkId.rows[0]
+
+        res.status(200).json({ 
+          message: `data found ID ${id} from ${table}`,
+          data: data })
       } catch (error) {
         next(error)
       }
@@ -78,7 +85,9 @@ export const BaseController = (table) => {
         const createOne = await pool.query(query, values)
         const data = createOne.rows.map(({ password, ...rest }) => rest)
 
-        res.status(201).json({ message: `data created on the ${table}`,data: data})
+        res.status(201).json({ 
+          message: `data created on the ${table}`,
+          data: data })
       } catch (error) {
         next(error)
       }
@@ -98,11 +107,15 @@ export const BaseController = (table) => {
 
         const keys = Object.keys(req.body)
         const values = Object.values(req.body)
-        const updateQuery = `UPDATE ${table} SET ${keys.map((key, i) => `${key} = $${i + 1}`).join(", ")} WHERE id = $${keys.length + 1} RETURNING *`
+        const updateQuery = `
+        UPDATE ${table} SET ${keys.map((key, i) => `${key} = $${i + 1}`)
+        .join(", ")} WHERE id = $${keys.length + 1} RETURNING *`
         const updateOne = await pool.query(updateQuery, [...values, id])
 
         const data = updateOne.rows.map(({ password, ...rest }) => rest)
-        res.status(200).json({ message: `data updated on the ${table}`,data: data })
+        res.status(200).json({ 
+          message: `data updated on the ${table}`,
+          data: data })
       } catch (error) {
         next(error)
       }
@@ -122,14 +135,7 @@ export const BaseController = (table) => {
       } catch (error) {
         next(error)
       }
-    },
-    search: async (req, res, next) => {
-      try {
-        const { page =1, limit =10 } = req.body
-        
-      } catch (error) {
-        next(error)
-      }
     }
+    
   }
 }
